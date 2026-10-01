@@ -1220,6 +1220,289 @@ textarea.input-control {
 }
 
 /* ==========================================================================
+   Operations & Growth Playbook Section (지속 운영 가이드)
+   ========================================================================== */
+.operations-dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.operations-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.8rem;
+}
+
+.operation-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 2.2rem 1.8rem;
+  transition: var(--transition);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+}
+
+.operation-card:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--border-hover);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-card);
+}
+
+.operation-header {
+  margin-bottom: 1.2rem;
+}
+
+.routine-badge {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-full);
+  margin-bottom: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.routine-badge.weekly {
+  background: rgba(212, 155, 88, 0.15);
+  color: var(--accent-gold);
+  border: 1px solid rgba(212, 155, 88, 0.3);
+}
+
+.routine-badge.monthly {
+  background: rgba(90, 160, 130, 0.15);
+  color: #6ed6a5;
+  border: 1px solid rgba(90, 160, 130, 0.3);
+}
+
+.routine-badge.quarterly {
+  background: rgba(140, 120, 220, 0.15);
+  color: #b5a4f7;
+  border: 1px solid rgba(140, 120, 220, 0.3);
+}
+
+.routine-badge.traffic {
+  background: rgba(220, 100, 130, 0.15);
+  color: #f58ba4;
+  border: 1px solid rgba(220, 100, 130, 0.3);
+}
+
+.routine-badge.system {
+  background: rgba(100, 180, 220, 0.15);
+  color: #7bcbee;
+  border: 1px solid rgba(100, 180, 220, 0.3);
+}
+
+.operation-card h4 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.operation-card .op-desc {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.op-task-list {
+  list-style: none;
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.op-task-list li {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+}
+
+.op-task-list li .task-dot {
+  color: var(--accent-gold);
+  font-weight: bold;
+  line-height: 1.4;
+}
+
+/* Interactive Checklist Panel */
+.checklist-panel {
+  background: var(--bg-card);
+  border: 1px solid var(--border-hover);
+  border-radius: var(--radius-lg);
+  padding: 3rem;
+  position: relative;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+}
+
+.checklist-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.checklist-title h3 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.3rem;
+}
+
+.checklist-title p {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.checklist-progress-wrap {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.checklist-progress-bar {
+  width: 160px;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.checklist-progress-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--accent-gradient);
+  border-radius: var(--radius-full);
+  transition: width 0.4s ease;
+}
+
+.checklist-counter {
+  font-family: var(--font-display);
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--accent-gold);
+}
+
+.interactive-checklist {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.check-item {
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 1rem 1.25rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.9rem;
+  cursor: pointer;
+  transition: var(--transition);
+  user-select: none;
+}
+
+.check-item:hover {
+  background: rgba(255, 255, 255, 0.03);
+  border-color: var(--border-hover);
+}
+
+.check-item.completed {
+  border-color: rgba(90, 160, 130, 0.4);
+  background: rgba(90, 160, 130, 0.05);
+}
+
+.check-item.completed .check-label {
+  text-decoration: line-through;
+  color: var(--text-muted);
+}
+
+.check-input {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--text-muted);
+  border-radius: 4px;
+  margin-top: 2px;
+  display: grid;
+  place-content: center;
+  transition: var(--transition);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.check-input:checked {
+  background: var(--accent-gold);
+  border-color: var(--accent-gold);
+}
+
+.check-input:checked::before {
+  content: '✓';
+  color: #12100e;
+  font-size: 0.8rem;
+  font-weight: 900;
+}
+
+.check-label {
+  font-size: 0.93rem;
+  color: var(--text-primary);
+  line-height: 1.5;
+  transition: var(--transition);
+}
+
+.check-tag {
+  font-size: 0.75rem;
+  color: var(--accent-gold);
+  margin-left: 0.4rem;
+}
+
+/* Operations Tip Banner */
+.operations-tip-banner {
+  background: rgba(212, 155, 88, 0.08);
+  border: 1px solid rgba(212, 155, 88, 0.2);
+  border-radius: var(--radius-md);
+  padding: 1.5rem 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.tip-icon {
+  font-size: 2rem;
+  color: var(--accent-gold);
+}
+
+.tip-content h5 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--accent-gold-light);
+  margin-bottom: 0.3rem;
+}
+
+.tip-content p {
+  font-size: 0.92rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 0;
+}
+
+/* ==========================================================================
    Responsive Adjustments (Mobile & Tablet)
    ========================================================================== */
 @media (max-width: 1024px) {
@@ -1237,7 +1520,12 @@ textarea.input-control {
   }
 
   .pillars-grid,
-  .reviews-grid {
+  .reviews-grid,
+  .operations-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .interactive-checklist {
     grid-template-columns: 1fr;
   }
 

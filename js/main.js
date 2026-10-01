@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initWorkflowTabs();
   initFormsAndModals();
   initScrollAnimations();
+  initChecklist();
 });
 
 /* ==========================================================================
@@ -161,7 +162,66 @@ function initScrollAnimations() {
     });
   }, observerOptions);
 
-  document.querySelectorAll('.pillar-card, .program-mini-card, .review-card, .featured-program-card').forEach(el => {
+  document.querySelectorAll('.pillar-card, .program-mini-card, .review-card, .featured-program-card, .operation-card').forEach(el => {
     observer.observe(el);
   });
+}
+
+/* ==========================================================================
+   Operations Interactive Checklist
+   ========================================================================== */
+function initChecklist() {
+  const checkItems = document.querySelectorAll('.check-item');
+  const progressFill = document.getElementById('checkProgressFill');
+  const progressText = document.getElementById('checkProgressText');
+
+  if (!checkItems.length || !progressFill || !progressText) return;
+
+  const STORAGE_KEY = 'humanist_director_checklist';
+  let savedState = {};
+
+  try {
+    savedState = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+  } catch (e) {
+    savedState = {};
+  }
+
+  // Restore saved state
+  checkItems.forEach(item => {
+    const taskId = item.getAttribute('data-id');
+    const input = item.querySelector('.check-input');
+    if (savedState[taskId]) {
+      input.checked = true;
+      item.classList.add('completed');
+    }
+
+    input.addEventListener('change', () => {
+      if (input.checked) {
+        item.classList.add('completed');
+        savedState[taskId] = true;
+      } else {
+        item.classList.remove('completed');
+        delete savedState[taskId];
+      }
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(savedState));
+      } catch (e) {}
+      updateProgress();
+    });
+  });
+
+  function updateProgress() {
+    const total = checkItems.length;
+    const completed = document.querySelectorAll('.check-item.completed').length;
+    const pct = total === 0 ? 0 : Math.round((completed / total) * 100);
+
+    progressFill.style.width = `${pct}%`;
+    progressText.innerText = `${completed} / ${total} 완료 (${pct}%)`;
+
+    if (completed === total && total > 0) {
+      showToast('🎉 축하합니다! 이번 주/월간 웹사이트 운영 필수 과제를 모두 완료하셨습니다!');
+    }
+  }
+
+  updateProgress();
 }
